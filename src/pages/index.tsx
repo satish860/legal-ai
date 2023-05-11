@@ -1,13 +1,22 @@
 import { useMantineTheme, Group, rem, Text } from "@mantine/core";
 import { Dropzone, PDF_MIME_TYPE } from "@mantine/dropzone";
+import { Upload } from "upload-js";
 
 export default function Home() {
   const theme = useMantineTheme();
+  const upload = Upload({
+    apiKey: "public_12a1yDhFXdiwiqc5cp4roMGKbtde",
+  });
+
+  const onDrop = async (files: any[]): Promise<any> => {
+    const { fileUrl } = await upload.uploadFile(files[0]);
+    console.log(fileUrl);
+  };
+
   return (
     <Dropzone
-      onDrop={(files) => console.log("accepted files", files)}
+      onDrop={onDrop}
       onReject={(files) => console.log("rejected files", files)}
-      maxSize={3 * 1024 ** 2}
       accept={PDF_MIME_TYPE}
     >
       <Group
