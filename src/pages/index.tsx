@@ -1,11 +1,8 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
 import { useMantineTheme, Group, rem, Text } from "@mantine/core";
 import { Dropzone, PDF_MIME_TYPE } from "@mantine/dropzone";
 
 export default function Home() {
   const theme = useMantineTheme();
-
   return (
     <Dropzone
       onDrop={(files) => console.log("accepted files", files)}
