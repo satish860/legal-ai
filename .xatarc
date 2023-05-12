@@ -1,0 +1,8 @@
+{
+  "databaseURL": "https://satish-s-workspace-6midd6.us-east-1.xata.sh/db/judgment",
+  "codegen": {
+    "output": "src/xata.js",
+    "moduleType": "esm",
+    "declarations": true
+  }
+}
