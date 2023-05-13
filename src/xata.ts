@@ -2,7 +2,7 @@
 import { buildClient } from "@xata.io/client";
 /** @typedef { import('./types').SchemaTables } SchemaTables */
 /** @type { SchemaTables } */
-const tables = [
+const tables : any = [
   {
     name: "judgments",
     columns: [
@@ -16,17 +16,18 @@ const tables = [
 /** @type { import('../../client/src').ClientConstructor<{}> } */
 const DatabaseClient = buildClient();
 const defaultOptions = {
+  db: "judgment",
   databaseURL:
     "https://satish-s-workspace-6midd6.us-east-1.xata.sh/db/judgment",
 };
 /** @typedef { import('./types').DatabaseSchema } DatabaseSchema */
 /** @extends DatabaseClient<DatabaseSchema> */
 export class XataClient extends DatabaseClient {
-  constructor(options) {
+  constructor(options: any = {}) {
     super({ ...defaultOptions, ...options }, tables);
   }
 }
-let instance = undefined;
+let instance :XataClient | undefined = undefined;
 /** @type { () => XataClient } */
 export const getXataClient = () => {
   if (instance) return instance;
