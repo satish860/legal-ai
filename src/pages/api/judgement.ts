@@ -8,7 +8,7 @@ type Data = {
 }
 
 export default async function handler(
-  req: NextApiRequest,
+req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
   const xata : XataClient = await getXataClient();
