@@ -12,6 +12,7 @@ import axios from "axios";
 import { Upload } from "upload-js";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
+import { Table } from '@mantine/core';
 
 export default function Home() {
   const theme = useMantineTheme();
