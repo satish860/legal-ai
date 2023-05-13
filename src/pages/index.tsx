@@ -1,11 +1,11 @@
-import { JudgmentsRecord } from "@/types";
-import { getXataClient } from "@/xata";
+import { getXataClient,JudgmentsRecord } from "@/xata";
 import { Table, Button } from "@mantine/core";
-import { GetStaticProps } from "next";
+import { GetStaticProps, } from "next";
+import Link from "next/link"
 import { AiOutlineFilePdf } from "react-icons/ai";
 
 interface HomeProps {
-  judgements: JudgmentsRecord[];
+  judgements: JudgmentsRecord[]
 }
 
 export default function Home(props: HomeProps) {
@@ -24,7 +24,7 @@ export default function Home(props: HomeProps) {
   console.log(props.judgements);
   return (
     <>
-      <a
+      <Link
         href="/summary"
         style={{ display: "flex", justifyContent: "center", padding: "20px" }}
       >
@@ -34,7 +34,7 @@ export default function Home(props: HomeProps) {
         >
           Upload a Document
         </Button>
-      </a>
+      </Link>
       <Table>
         <thead>
           <tr>
