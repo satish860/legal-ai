@@ -11,13 +11,13 @@ import { Dropzone, PDF_MIME_TYPE } from "@mantine/dropzone";
 import axios from "axios";
 import { Upload } from "upload-js";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
-import { Table } from '@mantine/core';
+import React, { useState } from "react";
 
 export default function Home() {
   const theme = useMantineTheme();
 
-  const [summary, setSummary] = useState("");
+  const [summaries, setSummaries] = useState<string[]>([]);
+
   const [visible, { open, close }] = useDisclosure(false);
 
   const upload = Upload({
@@ -34,9 +34,24 @@ export default function Home() {
     var response = await axios.post("api/summary", {
       url: fileUrl,
     });
-    console.log(response);
+    const pageContents = response.data.docs.map(
+      (p: { pageContent: any }) => p.pageContent
+    );
+    const newSummaries = await uploadpageContent(pageContents);
     close();
-    setSummary(response.data.text);
+    setSummaries(newSummaries);
+  };
+
+  const uploadpageContent = async (pageContent: any) => {
+    const summaries = [];
+    for (let i = 0; i < pageContent.length; i++) {
+      var summary = await axios.post("api/map", {
+        text: pageContent[i],
+      });
+      console.log(summary.data.summary);
+      summaries.push(summary.data.summary);
+    }
+    return summaries;
   };
 
   return (
@@ -64,15 +79,11 @@ export default function Home() {
           </Group>
         </Dropzone>
 
-        <Textarea
-          placeholder="Summary"
-          label="Results"
-          variant="filled"
-          radius="md"
-          size="md"
-          readOnly={true}
-          value={summary}
-        />
+        <ul>
+          {summaries.map((summary, index) => (
+            <li key={index}>{summary}</li>
+          ))}
+        </ul>
         <LoadingOverlay visible={visible} overlayBlur={2} />
       </Box>
     </>
