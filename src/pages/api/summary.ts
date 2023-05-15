@@ -3,6 +3,7 @@ import { inngest } from "./inngest";
 import axios from "axios";
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { OpenAI } from "langchain/llms/openai";
+import { loadSummarizationChain } from "langchain/chains";
 
 type Data = {
   url: string;
@@ -23,7 +24,11 @@ export default async function handler(
   const docs = await loader.load();
   const envir = process.env.OPENAI_API_KEY;
   const model = new OpenAI({ openAIApiKey: envir, temperature: 0 });
-  console.log(docs);
+  const chain = loadSummarizationChain(model, { type: "stuff" });
+  const summary = await chain.call({
+    input_documents: docs,
+  });
+  console.log(summary);
 
   res.status(200).json({ url: req.body.url, text: "Hello World!!" });
 }
