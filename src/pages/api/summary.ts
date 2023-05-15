@@ -24,7 +24,7 @@ export default async function handler(
   const docs = await loader.load();
   const envir = process.env.OPENAI_API_KEY;
   const model = new OpenAI({ openAIApiKey: envir, temperature: 0 });
-  const chain = loadSummarizationChain(model, { type: "stuff" });
+  const chain = loadSummarizationChain(model, { type: "refine" });
   const summary = await chain.call({
     input_documents: docs,
   });
